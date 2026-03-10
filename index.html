@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SONNO — The World's First Prosciutto Sleep Mask</title>
+  <style>
+    :root {
+      --rose: #c2506a;
+      --blush: #f7dada;
+      --cream: #fdf5ec;
+      --dark: #1a1014;
+      --gold: #c9985a;
+      --text: #3a1f28;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Georgia', serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(253,245,236,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e8d5c0;
+    }
+    .nav-logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 0.3em; color: var(--rose); text-transform: uppercase; }
+    .nav-links a { text-decoration: none; color: var(--text); margin-left: 2rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--rose); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 8rem 2rem 4rem;
+      background: radial-gradient(ellipse at 60% 40%, #f7dada 0%, var(--cream) 70%);
+    }
+    .hero-eyebrow { font-size: 0.8rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.1; color: var(--dark); margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: italic; color: var(--rose); }
+    .hero-sub { font-size: 1.2rem; color: #7a5060; max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .hero-mask { font-size: 9rem; display: block; margin: 2rem auto; filter: drop-shadow(0 8px 24px rgba(194,80,106,0.25)); animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+    .btn-primary {
+      display: inline-block; background: var(--rose); color: white;
+      padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none;
+      font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(194,80,106,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(194,80,106,0.5); }
+    .hero-badge { margin-top: 2rem; font-size: 0.78rem; color: #b09098; letter-spacing: 0.15em; }
+
+    .strip { background: var(--rose); color: white; text-align: center; padding: 1rem; font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase; }
+
+    .section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 0.75rem; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 3rem); text-align: center; color: var(--dark); margin-bottom: 1rem; }
+    .section-sub { text-align: center; color: #7a5060; max-width: 540px; margin: 0 auto 4rem; line-height: 1.7; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+    .feature-card {
+      background: white; border-radius: 16px; padding: 2.5rem 2rem;
+      text-align: center; border: 1px solid #f0ddd8;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(194,80,106,0.12); }
+    .feature-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 1.15rem; margin-bottom: 0.6rem; color: var(--dark); }
+    .feature-card p { font-size: 0.9rem; color: #7a5060; line-height: 1.65; }
+
+    .provenance { background: var(--dark); color: var(--blush); padding: 6rem 2rem; text-align: center; }
+    .provenance .section-label { color: var(--gold); }
+    .provenance .section-title { color: white; }
+    .provenance p { max-width: 600px; margin: 0 auto 2rem; line-height: 1.8; color: #c9a8b4; }
+    .stats-row { display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; flex-wrap: wrap; }
+    .stat-number { font-size: 2.8rem; font-weight: bold; color: var(--gold); }
+    .stat-label { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #c9a8b4; margin-top: 0.3rem; }
+
+    .science-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media (max-width: 700px) { .science-grid { grid-template-columns: 1fr; } }
+    .science-visual { background: white; border-radius: 20px; padding: 3rem; text-align: center; border: 1px solid #f0ddd8; font-size: 6rem; }
+    .science-text h2 { font-size: 2rem; margin-bottom: 1.2rem; color: var(--dark); }
+    .science-text p { color: #7a5060; line-height: 1.8; margin-bottom: 1rem; }
+    .ingredient-list { margin-top: 1.5rem; list-style: none; }
+    .ingredient-list li { padding: 0.5rem 0; border-bottom: 1px solid #f0ddd8; font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem; }
+    .ingredient-list li::before { content: "✦"; color: var(--gold); font-size: 0.7rem; }
+
+    .testimonials { background: var(--blush); padding: 6rem 2rem; }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+    .testimonial-card { background: white; border-radius: 16px; padding: 2rem; border: 1px solid #e8caca; }
+    .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 0.75rem; }
+    .testimonial-card p { font-style: italic; line-height: 1.7; color: var(--text); margin-bottom: 1rem; }
+    .reviewer { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); font-style: normal; }
+
+    .cta-section { text-align: center; padding: 7rem 2rem; background: radial-gradient(ellipse at 50% 100%, #f7dada 0%, var(--cream) 60%); }
+    .price-tag { font-size: 3.5rem; font-weight: bold; color: var(--rose); display: block; margin: 1.5rem 0 0.5rem; }
+    .price-note { font-size: 0.85rem; color: #b09098; margin-bottom: 2rem; letter-spacing: 0.1em; }
+    .shop-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem; }
+    .shop-card { max-width: 280px; }
+
+    footer { background: var(--dark); color: #7a5060; text-align: center; padding: 2.5rem; font-size: 0.8rem; letter-spacing: 0.1em; }
+    footer span { color: var(--rose); }
+    @media (max-width: 600px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .stats-row { gap: 2rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Sonno</div>
+  <div class="nav-links">
+    <a href="#features">The Science</a>
+    <a href="#provenance">Provenance</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#shop">Shop</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">Introducing Sonno di Maiale&#8482;</p>
+    <h1>Sleep like you're<br /><em>cured.</em></h1>
+    <p class="hero-sub">The world's first artisanal prosciutto-infused sleep mask. Hand-sliced in Parma. Worn on your face. While you dream.</p>
+    <span class="hero-mask" role="img" aria-label="sleep mask">&#129385;</span>
+    <br />
+    <a href="#shop" class="btn-primary">Shop the Collection</a>
+    <p class="hero-badge">&#10022; 24-Month Aging &#10022; DOP Certified &#10022; Sleep-Grade Fat Marbling &#10022;</p>
+  </div>
+</section>
+
+<div class="strip">Free overnight shipping on orders over $180 &middot; No substitutions &middot; No refunds (it's meat)</div>
+
+<section class="section" id="features">
+  <p class="section-label">Why Prosciutto</p>
+  <h2 class="section-title">Finally. A sleep mask<br />that works as hard as you do.</h2>
+  <p class="section-sub">Ordinary sleep masks block light. Sonno blocks light <em>and</em> releases micro-doses of cured pork essence directly into your skin. You do the math.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#127761;</div>
+      <h3>Total Darkness</h3>
+      <p>Our paper-thin prosciutto slices conform perfectly to your orbital bones, achieving a blackout only previously possible inside a 16th-century Italian ham cellar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#129384;</div>
+      <h3>Pork Fat Moisture Barrier</h3>
+      <p>The naturally occurring fat cap creates a 12-hour occlusive moisture seal. Dermatologists are baffled. Norcino masters are not.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#129474;</div>
+      <h3>Mineral Salt Therapy</h3>
+      <p>Sea salt used in the curing process draws impurities from periorbital skin while you sleep. It's basically a spa treatment from a pig.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127769;</div>
+      <h3>Umami-Induced Calm</h3>
+      <p>Our proprietary research (n=1, Jake's cousin Gino) suggests proximity to aged pork triggers the same neural pathways as a warm bowl of ribollita.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128055;</div>
+      <h3>Ethically Sourced</h3>
+      <p>Our pigs live a beautiful, free-range life in the Po Valley and are told they're contributing to the future of sleep science. Which is true.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#9851;</div>
+      <h3>Zero Waste</h3>
+      <p>After use, your mask can be composted, gifted to a dog, or eaten with a light Lambrusco. We believe in full-cycle luxury.</p>
+    </div>
+  </div>
+</section>
+
+<section class="provenance" id="provenance">
+  <p class="section-label">Heritage</p>
+  <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 3rem);">Born in Parma.<br />Worn in bed.</h2>
+  <p>Sonno di Maiale&#8482; is produced in a small-batch facility in Langhirano, the village that has been air-curing ham in mountain breezes since the Roman Empire. Our master slicer, Enzo, uses a hand-operated berkel to achieve the sub-millimeter translucency required for optimal light occlusion.</p>
+  <p>Each mask is sliced to order, individually laid on food-grade silk paper, and shipped in a refrigerated artisan box lined with rosemary sprigs because Enzo insists on it and we are not going to argue with Enzo.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-number">24</div><div class="stat-label">Months Aged</div></div>
+    <div class="stat"><div class="stat-number">1</div><div class="stat-label">Master Slicer (Enzo)</div></div>
+    <div class="stat"><div class="stat-number">0.8mm</div><div class="stat-label">Slice Precision</div></div>
+    <div class="stat"><div class="stat-number">&#8734;</div><div class="stat-label">Umami Units</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="science-grid">
+    <div class="science-visual">
+      &#128055;<br />
+      <span style="font-size: 1rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-top: 1rem;">Leg of Origin</span>
+    </div>
+    <div class="science-text">
+      <h2>The Sonno Sleep Protocol</h2>
+      <p>Clinical sleep science tells us that darkness, temperature regulation, and olfactory comfort are the three pillars of deep rest. Prosciutto addresses all three simultaneously.</p>
+      <p>The unique micro-climate created between cured pork and facial skin maintains an optimal 28&#176;C sleep zone. The scent profile — nutty, sweet, slightly oceanic — is indistinguishable from a Verified Comfort Aroma in three of four blinded trials.</p>
+      <ul class="ingredient-list">
+        <li>100% DOP Prosciutto di Parma (24-month)</li>
+        <li>Himalayan pink salt cure</li>
+        <li>Mountain air (Apennines, unpasteurized)</li>
+        <li>Time (lots of it)</li>
+        <li>Enzo's blessing</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="reviews">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <p class="section-label">Reviews</p>
+    <h2 class="section-title" style="margin-bottom: 1rem;">Our customers are asleep.<br />But they were very happy before that.</h2>
+    <p class="section-sub">&#10022; 4.9/5 based on 23 reviews &#10022;</p>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"I have never slept better, smelled better, or felt more Italian. My husband says I look ridiculous. He is wrong."</p>
+        <div class="reviewer">— Margaux T., Sonoma, CA</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"I was skeptical. I am now a believer. Eight hours of uninterrupted sleep and when I woke up, the mask was gone. I have no memory of eating it. No regrets."</p>
+        <div class="reviewer">— Derek M., Austin, TX</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <p>"The mask itself: perfect. The cat situation: not perfect. Four stars because the replacement mask arrived quickly and the customer service rep (I think it was Enzo) was very kind."</p>
+        <div class="reviewer">— Priya K., Brooklyn, NY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="shop">
+  <p class="section-label">Shop</p>
+  <h2 class="section-title">Choose Your Cut</h2>
+  <p class="section-sub">Each mask is made to order and shipped fresh. Please allow 7-10 business days for curing to complete.</p>
+  <div class="shop-grid">
+    <div class="feature-card shop-card">
+      <div class="feature-icon">&#129385;</div>
+      <h3>Il Classico</h3>
+      <p style="margin-bottom: 1rem;">Single-serving, standard orbital fit. 18-month aged. Great for first-timers.</p>
+      <span class="price-tag">$68</span>
+      <div class="price-note">per mask &middot; single use</div>
+      <a href="#" class="btn-primary" style="font-size: 0.85rem;">Add to Cart</a>
+    </div>
+    <div class="feature-card shop-card" style="border-color: var(--rose); position: relative;">
+      <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--rose); color: white; font-size: 0.7rem; padding: 0.3rem 0.9rem; border-radius: 20px; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap;">Most Popular</div>
+      <div class="feature-icon">&#129386;</div>
+      <h3>Il Riserva</h3>
+      <p style="margin-bottom: 1rem;">24-month aged, wide-fit, extra fat cap. For the connoisseur who refuses to compromise.</p>
+      <span class="price-tag">$140</span>
+      <div class="price-note">per mask &middot; single use</div>
+      <a href="#" class="btn-primary" style="font-size: 0.85rem;">Add to Cart</a>
+    </div>
+    <div class="feature-card shop-card">
+      <div class="feature-icon">&#127873;</div>
+      <h3>La Stagione</h3>
+      <p style="margin-bottom: 1rem;">Monthly subscription. One fresh mask delivered each month. Enzo personally signs the slip.</p>
+      <span class="price-tag">$95<span style="font-size: 1.2rem;">/mo</span></span>
+      <div class="price-note">cancel anytime &middot; Enzo cries either way</div>
+      <a href="#" class="btn-primary" style="font-size: 0.85rem;">Subscribe</a>
+    </div>
+    <div class="feature-card shop-card">
+      <div class="feature-icon">🪑</div>
+      <h3>Lo Sgabello</h3>
+      <p style="margin-bottom: 1rem;">The Yoni Steam Stool. Artisan cedar, hand-lathed in Parma. Softens and moisturizes your prosciutto mask through targeted thermal conditioning. Other applications are your own private affair.</p>
+      <span class="price-tag">$65</span>
+      <div class="price-note">one-time purchase &middot; mask sold separately</div>
+      <a href="#" class="btn-primary" style="font-size: 0.85rem;">Add to Cart</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="font-size: 1.2rem; color: #c2506a; letter-spacing: 0.3em; margin-bottom: 0.75rem;">SONNO</p>
+  <p>&copy; 2025 Sonno di Maiale&#8482; &middot; Langhirano, Italy &middot; <span>Not approved by the FDA, your dermatologist, or your dog's veterinarian.</span></p>
+  <p style="margin-top: 0.5rem;">Prosciutto di Parma DOP &middot; Product may contain pork &middot; This is intentional.</p>
+</footer>
+
+</body>
+</html>
