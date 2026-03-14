@@ -486,7 +486,7 @@ document.getElementById('sonnoFilm').addEventListener('ended', function() {
     e.preventDefault();
     const email = document.getElementById('waitlistEmail').value;
     try {
-      await fetch('https://formspree.io/f/SONNO_FORM_ID', {
+      await fetch('https://formspree.io/f/xaqpbbrv', {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
         body: JSON.stringify({email, source: 'SONNO waitlist'})
