@@ -169,6 +169,48 @@
     footer { background: var(--dark); color: #7a5060; text-align: center; padding: 2.5rem; font-size: 0.8rem; letter-spacing: 0.1em; }
     footer span { color: var(--rose); }
     @media (max-width: 600px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .stats-row { gap: 2rem; } }
+  
+    /* WAITLIST MODAL */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(60,20,30,0.75); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff8f5; border-radius: 20px; padding: 3rem 2.5rem;
+      max-width: 440px; width: 90%; text-align: center;
+      border: 1px solid #f0ddd8; position: relative;
+      animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn { from { opacity:0; transform: scale(0.92) translateY(12px); } to { opacity:1; transform: scale(1) translateY(0); } }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1.25rem;
+      background: none; border: none; font-size: 1.4rem; cursor: pointer;
+      color: var(--muted); line-height: 1;
+    }
+    .modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .modal h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.6rem; color: var(--deep); margin-bottom: 0.5rem; }
+    .modal p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+    .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
+    .modal-form input[type=email] {
+      padding: 0.85rem 1.25rem; border: 1.5px solid #e8d5c0; border-radius: 50px;
+      font-size: 0.95rem; text-align: center; outline: none;
+      transition: border-color 0.2s; font-family: inherit;
+    }
+    .modal-form input[type=email]:focus { border-color: var(--rose); }
+    .modal-form button {
+      background: var(--rose); color: white; border: none; cursor: pointer;
+      padding: 0.85rem 2rem; border-radius: 50px; font-size: 0.9rem;
+      letter-spacing: 0.1em; text-transform: uppercase; font-family: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .modal-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(194,80,106,0.4); }
+    .modal-note { font-size: 0.75rem; color: #c9a8b4; margin-top: 0.5rem; }
+    .modal-success { display: none; }
+    .modal-success.active { display: block; }
+    .modal-fields.hidden { display: none; }
+
   </style>
 </head>
 <body>
@@ -408,5 +450,60 @@ document.getElementById('sonnoFilm').addEventListener('ended', function() {
   }
 </script>
 <script data-goatcounter="https://stats.dejaview.io/count" async src="//gc.zgo.at/count.js"></script>
+
+<!-- WAITLIST MODAL -->
+<div class="modal-overlay" id="waitlistModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-icon">&#129385;</div>
+    <h3>Il Waitlist</h3>
+    <p>Enzo is still in the curing chamber. Leave your email and he will notify you personally when your mask is ready for procurement.</p>
+    <form class="modal-form modal-fields" id="waitlistForm">
+      <input type="email" placeholder="your@email.com" required id="waitlistEmail" />
+      <button type="submit">Notify Me When Enzo Is Ready</button>
+      <p class="modal-note">No spam. Only prosciutto.</p>
+    </form>
+    <div class="modal-success" id="waitlistSuccess">
+      <p style="font-size:2rem; margin-bottom:0.5rem;">&#10003;</p>
+      <p><strong>Magnifico.</strong> Enzo has been informed. He shed a single tear of gratitude, which we have bottled and will include with your first order.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(e) {
+    e.preventDefault();
+    document.getElementById('waitlistModal').classList.add('active');
+    setTimeout(() => document.getElementById('waitlistEmail').focus(), 300);
+  }
+  function closeModal() {
+    document.getElementById('waitlistModal').classList.remove('active');
+  }
+  document.getElementById('waitlistModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('waitlistEmail').value;
+    try {
+      await fetch('https://formspree.io/f/SONNO_FORM_ID', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify({email, source: 'SONNO waitlist'})
+      });
+    } catch(err) {}
+    document.querySelector('.modal-fields').classList.add('hidden');
+    document.getElementById('waitlistSuccess').classList.add('active');
+    setTimeout(closeModal, 3500);
+  });
+
+  // Wire all Add to Cart / Subscribe buttons
+  document.querySelectorAll('.btn-primary').forEach(btn => {
+    if (btn.getAttribute('href') === '#') {
+      btn.addEventListener('click', openModal);
+    }
+  });
+</script>
+
 </body>
 </html>
